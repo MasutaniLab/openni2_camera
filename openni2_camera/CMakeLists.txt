@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.5)
 project(openni2_camera)
 
 if(NOT CMAKE_CXX_STANDARD)
-  set(CMAKE_CXX_STANDARD 14)
+  set(CMAKE_CXX_STANDARD 17)
 endif()
 
 find_package(ament_cmake REQUIRED)
@@ -70,9 +70,11 @@ ament_target_dependencies(openni2_camera_lib
   sensor_msgs
   rclcpp
 )
-rosidl_get_typesupport_target(cpp_typesupport_target
+# rosidl_get_typesupport_target(cpp_typesupport_target
+#   ${PROJECT_NAME} "rosidl_typesupport_cpp")
+# target_link_libraries(openni2_camera_lib "${cpp_typesupport_target}")
+rosidl_target_interfaces(openni2_camera_lib
   ${PROJECT_NAME} "rosidl_typesupport_cpp")
-target_link_libraries(openni2_camera_lib "${cpp_typesupport_target}")
 
 rclcpp_components_register_node(openni2_camera_lib
   PLUGIN "openni2_wrapper::OpenNI2Driver"
